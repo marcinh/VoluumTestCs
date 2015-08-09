@@ -9,6 +9,9 @@ using VoluumTestCs.Properties;
 
 namespace VoluumTestCs.Framework
 {
+    /// <summary>
+    /// Class containing logical functions build with basic rest functions from parent class
+    /// </summary>
     public class VoluumApp : RestBase, IDisposable
     {
         private string securityUrl;
@@ -21,6 +24,11 @@ namespace VoluumTestCs.Framework
             coreUrl = Settings.Default.CoreUrl;
         }
 
+        /// <summary>
+        /// Login method using REST api
+        /// </summary>
+        /// <param name="user">Username to log in</param>
+        /// <param name="password">User password to log in</param>
         public void Login(string user, string password)
         {
             client.BaseUrl = new Uri(securityUrl);
@@ -35,11 +43,17 @@ namespace VoluumTestCs.Framework
             securityToken = response.GetJsonContent().token;
         }
 
+        /// <summary>
+        /// Login method using REST api with credentials from project settings
+        /// </summary>
         public void Login()
         {
             Login(Settings.Default.User, Settings.Default.Password);
         }
 
+        /// <summary>
+        /// Logout method using REST api
+        /// </summary>
         public void Logout()
         {
             client = new RestClient(securityUrl);
@@ -47,6 +61,11 @@ namespace VoluumTestCs.Framework
             var response = ExecuteSecurely("/session/logout", Method.GET);
         }
 
+        /// <summary>
+        /// Method used to create new campaign based on argument passed
+        /// </summary>
+        /// <param name="campaignObject">Object describing campaign details</param>
+        /// <returns></returns>
         public RestResponse CreateCampaign(CampaignObject campaignObject)
         {
             client = new RestClient(coreUrl);
@@ -57,6 +76,11 @@ namespace VoluumTestCs.Framework
             });
         }
 
+        /// <summary>
+        /// Method getting campaign statistics from reports page based on campaign id provided
+        /// </summary>
+        /// <param name="id">Unique campaign id</param>
+        /// <returns></returns>
         public CampaignReportObject GetCampaignStatistics(string id)
         {
             client = new RestClient(Settings.Default.ReportsUrl);
@@ -69,6 +93,11 @@ namespace VoluumTestCs.Framework
             return array.First.ToObject<CampaignReportObject>();
         }
 
+        /// <summary>
+        /// Method getting campaign details based on campaign id provided
+        /// </summary>
+        /// <param name="id">Unique campaign id</param>
+        /// <returns></returns>
         public RestResponse GetCampaighDetails(string id)
         {
              client = new RestClient(coreUrl);

@@ -1,6 +1,8 @@
 ﻿namespace VoluumTestCs.Framework.SerialObjects
 {
-    //Mocked
+    /// <summary>
+    /// Mock object for JSON serializtion
+    /// </summary>
     public class ClientObject
     {
         public string id { get { return "4093bd73-c37c-4717-8a18-539d653dc4f2"; } }

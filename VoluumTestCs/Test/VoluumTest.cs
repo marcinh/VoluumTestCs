@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using NUnit.Framework;
 
@@ -11,9 +10,10 @@ namespace VoluumTestCs.Test
     [TestFixture]
     public class VoluumTest
     {
-        //Example campaigh ID for test purposes
+        //Example campaign ID for test purposes
         const string CAMPAIGNID = "806f4cf7-3168-4866-a212-837ecce37fef";
-        const string CAPMPAIGHNAME = "TEST001";
+        //Example campaigh name
+        const string CAPMPAIGNNAME = "TEST004";
 
         private Uri redirectUri;
 
@@ -28,20 +28,20 @@ namespace VoluumTestCs.Test
         {
             using (var vApp = VoluumApp.LoggedIn)
             {
-                var result = vApp.CreateCampaign(new CampaignObject(CAPMPAIGHNAME, redirectUri.OriginalString, TrafficClassObject.ZeroPark));
+                var result = vApp.CreateCampaign(new CampaignObject(CAPMPAIGNNAME, redirectUri.OriginalString, TrafficClassObject.ZeroPark));
 
                 Assert.AreEqual(result.StatusCode, HttpStatusCode.Created, "Campaign was created");
 
                 string linkResponse = result.GetJsonContent().url;
 
-                result = vApp.Get(linkResponse,false);
+                result = vApp.Get(linkResponse, false);
 
-                Assert.AreEqual(HttpStatusCode.Redirect, result.StatusCode, "Campaign link redirects to new page");
+                Assert.AreEqual(HttpStatusCode.Redirect, result.StatusCode, "Campaign link redirects to new page");          
 
-                var currentUri = new Uri(result.Headers.First(h => h.Name == "Location").Value as string);
+                var currentUri = new Uri(result.GetLocation());
                 string expSubId = redirectUri.GetReplacedQuery("[A-Za-z0-9]{24}");
 
-                StringAssert.StartsWith(redirectUri.Host, currentUri.OriginalString, "Campaign link redirects to new page");
+                StringAssert.StartsWith(redirectUri.GetFullHost(), currentUri.OriginalString, "Campaign link redirects to new page");
                 StringAssert.IsMatch(expSubId, currentUri.Query, "Offer URL has resolved subid parameter’s value");
             }
         }
@@ -95,9 +95,9 @@ namespace VoluumTestCs.Test
 
                 bool conversionsIncrementd = false;
 
-                for (int i = 0; i < 30; i++)
+                for (int i = 0; i < 15; i++)
                 {
-                    System.Threading.Thread.Sleep(1000);
+                    System.Threading.Thread.Sleep(2000);
 
                     if (vApp.GetCampaignStatistics(CAMPAIGNID).conversions == conversionsNumber + 1)
                     {
