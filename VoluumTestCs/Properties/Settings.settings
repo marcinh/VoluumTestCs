@@ -1,0 +1,21 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="VoluumTestCs.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SecurityUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://security.voluum.com</Value>
+    </Setting>
+    <Setting Name="CoreUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://core.voluum.com</Value>
+    </Setting>
+    <Setting Name="User" Type="System.String" Scope="User">
+      <Value Profile="(Default)">sdit.recruit2@codewise.com</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="User">
+      <Value Profile="(Default)">r8uJ4@5qQpC%</Value>
+    </Setting>
+    <Setting Name="ReportsUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://reports.voluum.com </Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
